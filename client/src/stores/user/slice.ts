@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginCaseReducer, logoutCaseReducer } from "./reducers";
+import { addOrderCaseReducer, loginCaseReducer, logoutCaseReducer } from "./reducers";
 import { userInitialState } from "./state";
 
 const UserReducerSlice = createSlice({
@@ -8,9 +8,10 @@ const UserReducerSlice = createSlice({
   reducers: {
     login: loginCaseReducer,
     logout: logoutCaseReducer,
+    addOrder: addOrderCaseReducer,
   },
 });
 
-export const { login, logout } = UserReducerSlice.actions;
+export const { login, logout, addOrder } = UserReducerSlice.actions;
 
 export const UserReducer = UserReducerSlice.reducer;
