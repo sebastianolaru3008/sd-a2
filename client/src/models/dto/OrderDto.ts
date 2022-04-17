@@ -1,8 +1,7 @@
-import { OrderedFoodDto } from "./OrderedFoodDto";
-
+import { OrderedFoodDto } from './OrderedFoodDto';
 
 export interface OrderDto {
-  customerId: string,
-  orderedFoods: OrderedFoodDto[],
-  restaurantId: string,
+    customerId: string;
+    orderedFoods: OrderedFoodDto[];
+    restaurantId: string;
 }

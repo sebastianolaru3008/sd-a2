@@ -1,7 +1,7 @@
-import { OrderedFood } from "./OrderedFood";
+import { OrderedFood } from './OrderedFood';
 
-export interface Order{
-  id: string,
-  orderStatus: string,
-  orderedFoods: OrderedFood[],
+export interface Order {
+    id: string;
+    orderStatus: string;
+    orderedFoods: OrderedFood[];
 }

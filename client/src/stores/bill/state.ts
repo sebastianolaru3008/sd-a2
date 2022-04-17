@@ -1,9 +1,9 @@
-import { FoodOrderItem } from "../../models/entities/FoodOrderItem";
+import { FoodOrderItem } from '../../models/entities/FoodOrderItem';
 
 export interface BillState {
-    cartItems: FoodOrderItem[]
+    cartItems: FoodOrderItem[];
 }
 
 export const billInitialState: BillState = {
-    cartItems: []
+    cartItems: [],
 };

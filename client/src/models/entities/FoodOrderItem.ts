@@ -1,6 +1,6 @@
-import { Food } from "./Food";
+import { Food } from './Food';
 
 export interface FoodOrderItem {
-  item: Food,
-  quantity: number,
+    item: Food;
+    quantity: number;
 }

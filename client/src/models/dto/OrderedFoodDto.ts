@@ -1,4 +1,4 @@
-export interface OrderedFoodDto{
-  foodId:string,
-  quantity: number,
+export interface OrderedFoodDto {
+    foodId: string;
+    quantity: number;
 }

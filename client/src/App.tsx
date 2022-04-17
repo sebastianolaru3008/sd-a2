@@ -3,9 +3,7 @@ import './App.css';
 import MainRouter from './features/main_navigator/components/MainRouter';
 
 function App() {
-  return (
-      <MainRouter/>
-  );
+    return <MainRouter />;
 }
 
 export default App;

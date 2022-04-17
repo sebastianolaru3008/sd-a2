@@ -9,14 +9,14 @@ import reportWebVitals from './reportWebVitals';
 import { persistor, store } from './stores/store';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <PersistGate persistor={persistor}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PersistGate>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <PersistGate persistor={persistor}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </PersistGate>
+    </Provider>,
+    document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function
