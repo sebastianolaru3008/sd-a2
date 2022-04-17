@@ -64,10 +64,17 @@ public class OrderService {
         var o = orderRepository.findById(id);
         if (o.isEmpty()) throw new Exception("Nonexistent order");
 
-        if(orderStatus.getValue() - o.get().getOrderStatus().getValue() == 1)
+        System.out.println(orderStatus.getValue());
+        System.out.println(o.get().getOrderStatus().getValue());
+
+        if(orderStatus.getValue() - o.get().getOrderStatus().getValue() == 1){
             o.get().advanceStatus();
+            System.out.println(o.get().getOrderStatus());
+        }
         if(orderStatus.getValue() - o.get().getOrderStatus().getValue() == 4)
             o.get().declineOrder();
+
+
 
         return OrderMapper.toDto(o.get());
     }

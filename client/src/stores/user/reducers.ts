@@ -1,5 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
+import { Food } from "../../models/entities/Food";
 import { Order } from "../../models/entities/Order";
+import { Restaurant } from "../../models/entities/Restaurant";
 import { User } from "../../models/entities/User";
 import { userInitialState, UserState } from "./state";
 
@@ -22,3 +24,30 @@ export const addOrderCaseReducer = (
 ) => {
   state.user.orders.push(action.payload)
 };
+
+export const addRestaurantToUserCaseReducer = (
+  state: UserState,
+  action: PayloadAction<Restaurant>
+) => {
+  state.user.restaurants.push(action.payload);
+}
+
+export const addFoodToRestaurantCaseReducer = (
+  state: UserState,
+  action: PayloadAction<{food:Food, restaurantId: string}>
+) => {
+  
+    state.user.restaurants = state.user.restaurants.map((restaurant) => {
+      if(restaurant.id === action.payload.restaurantId){
+        restaurant.foods.push(action.payload.food);
+      }
+      return restaurant;
+    });   
+}
+
+export const setIsInputErrorCaseReducer = (
+  state: UserState,
+  action: PayloadAction<boolean>
+) => {
+  state.isInputError = action.payload;
+}

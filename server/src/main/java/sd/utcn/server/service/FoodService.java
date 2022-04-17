@@ -25,6 +25,8 @@ public class FoodService {
     public FoodDto addFoodToRestaurant(NewFoodDto newFood) throws Exception {
         var restaurant = restaurantRepository.findById(newFood.getRestaurantId());
         if(restaurant.isEmpty()) throw  new Exception("Nonexistent restaurant");
+        if(newFood.getPrice() <= 0) throw  new Exception("Invalid price");
+
         var entity = FoodMapper.toEntity(newFood);
         entity.setRestaurant(restaurant.get());
         var added = foodRepository.save(entity);

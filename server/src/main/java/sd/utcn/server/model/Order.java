@@ -31,6 +31,13 @@ public class Order {
     private State state;
 
     public void advanceStatus() {
+        state = switch (this.orderStatus) {
+            case PENDING -> new PendingState(this);
+            case ACCEPTED -> new AcceptedState(this);
+            case DECLINED -> new DeclinedState( this);
+            case IN_DELIVERY -> new InDeliveryState(this);
+            default -> new DeliveredState(this);
+        };
         state.advanceOrder();
     }
 
@@ -39,13 +46,6 @@ public class Order {
     }
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
-        state = switch (orderStatus) {
-            case PENDING -> new PendingState(this);
-            case ACCEPTED -> new AcceptedState(this);
-            case DECLINED -> new DeclinedState(this);
-            case IN_DELIVERY -> new InDeliveryState(this);
-            default -> new DeliveredState(this);
-        };
     }
 
     public Order() {

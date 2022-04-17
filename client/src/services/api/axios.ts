@@ -51,7 +51,7 @@ export const axiosPostRequest = async <T1, T2>(
 //TODO: test implementations for axios put and delete requests
 export const axiosPutRequest = async <T1, T2>(
   url: string,
-  id: number,
+  id: number | string,
   optionalQueryParams: string,
   data: T1
 ): Promise<T2> => {

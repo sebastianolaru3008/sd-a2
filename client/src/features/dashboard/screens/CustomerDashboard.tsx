@@ -23,21 +23,11 @@ import HeaderBar from "../../../components/HeaderBar/HeaderBar";
 import { FoodOrderItem } from "../../../models/entities/FoodOrderItem";
 import { Restaurant } from "../../../models/entities/Restaurant";
 import { User } from "../../../models/entities/User";
+import { categories } from "../../../models/enums/FoodCategory";
 import { addToCart } from "../../../stores/bill/slice";
 import { setCurrentRestaurant } from "../../../stores/restaurants/slice";
 import { RootState } from "../../../stores/store";
 
-
-
-const categories = ["Pizza", "Pasta", "Desert"];
-const deliveryZones = ["1", "2", "3"];
-const orderStatuses = [
-  "PENDING",
-  "ACCEPTED",
-  "DECLINED",
-  "IN_DELIVERY",
-  "DELIVERED",
-];
 
 const CustomerDashboard = () => {
   const [category, setCategory] = React.useState(categories[0]);
@@ -87,7 +77,7 @@ const CustomerDashboard = () => {
               <TableCell align="right">Action</TableCell>
             </TableRow>
           }
-          body={currentRestaurant?.foods.map((food) => (
+          body={currentRestaurant?.foods.filter(food => food.category === category).map((food) => (
             <TableRow
               key={food.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

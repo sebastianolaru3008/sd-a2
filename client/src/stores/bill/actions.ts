@@ -17,10 +17,9 @@ async (dispatch) =>{
         } as OrderDto;
 
         const response = await placeOrderRequest(data);
-        console.log("🚀 ~ file: actions.ts ~ line 12 ~ response", response);
         // console.log("🚀 ~ file: actions.ts ~ line 12 ~ response", "orders" in response);
-        
 
+        
         dispatch(addOrder(response));
     }catch(error){
         console.log("Error:", error);

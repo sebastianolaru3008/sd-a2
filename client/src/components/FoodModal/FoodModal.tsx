@@ -1,14 +1,27 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import Alert from '@mui/material/Alert';
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../stores/store";
+import { addFood } from "../../stores/user/actions";
+
 
 type Props = {
   isOpen: boolean;
   selectedCategory?: string;
   onClose: () => void;
-  onSubmit: () => void;
 };
 
 const FoodModal = (props: Props) => {
+  const dispatch = useDispatch();
+  const restaurantId = useSelector<RootState,string>(state => state.restaurants.currentRestaurant?.id ?? "");
+  const [name, setName] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [price, setPrice] = React.useState(0);
+  const [category, setCategory] = React.useState("");
+  const isInputError = useSelector<RootState, boolean>(state => state.user.isInputError);
+
+
   return (
     <Modal
       style={{
@@ -41,6 +54,10 @@ const FoodModal = (props: Props) => {
           id="outlined-basic"
           label="Name"
           variant="outlined"
+          value={name}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setName(event.target.value)
+          }
         />
         <TextField
           sx={{ marginBottom: 2 }}
@@ -48,6 +65,10 @@ const FoodModal = (props: Props) => {
           label="Description"
           rows={4}
           variant="outlined"
+          value={description}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setDescription(event.target.value)
+          }
         />
         <TextField
           sx={{ marginBottom: 2 }}
@@ -56,18 +77,33 @@ const FoodModal = (props: Props) => {
           rows={4}
           defaultValue={props.selectedCategory}
           variant="outlined"
+          value={category}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setCategory(event.target.value)
+          }
         />
         <TextField
           sx={{ marginBottom: 2 }}
           id="outlined-basic"
           label="Price"
           variant="outlined"
+          value={price}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setPrice(Number(event.target.value))
+          }
         />
+        {isInputError && <Alert severity="error">Invalid input data. Please check it again!</Alert>}
+
         <Button
           variant="contained"
           color="primary"
           sx={{ textTransform: "none" }}
-          onClick={() => props.onSubmit()}
+          onClick={() => {
+            dispatch(addFood(name, description, category, price, restaurantId));
+            if(!isInputError) {
+              props.onClose();
+            }
+          }}
         >
           Submit
         </Button>

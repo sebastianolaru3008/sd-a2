@@ -8,20 +8,28 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
+import Alert from '@mui/material/Alert';
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../stores/store";
+import { addRestaurant } from "../../stores/user/actions";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
 };
 
 const deliveryZones = ["1", "2", "3"];
 
 const RestaurantModal = (props: Props) => {
+  const dispatch =  useDispatch();
+  const [name, setName] = React.useState('');
+  const [location, setLocation] = React.useState("");
   const [deliveryZone, setDeliveryZone] = React.useState(deliveryZones[0]);
+  const adminId = useSelector<RootState, string>(state => state.user.user.id);
+  const isInputError = useSelector<RootState, boolean>(state => state.user.isInputError);
   return (
     <Modal
       style={{
@@ -44,11 +52,21 @@ const RestaurantModal = (props: Props) => {
           Add a restaurant
         </Typography>
 
-        <TextField sx={{ marginBottom: 2 }} label="Name" variant="outlined" />
+        <TextField 
+          sx={{ marginBottom: 2 }} 
+          label="Name" 
+          variant="outlined" 
+          value = {name}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
+        />
         <TextField
           sx={{ marginBottom: 2 }}
           label="Location"
           variant="outlined"
+          value = {location}
+          onChange = {(event: React.ChangeEvent<HTMLInputElement>) => 
+            setLocation(event.target.value)
+          }
         />
         <FormControl sx={{ display: "flex" }}>
           <InputLabel>Delivery Zone</InputLabel>
@@ -64,11 +82,17 @@ const RestaurantModal = (props: Props) => {
             ))}
           </Select>
         </FormControl>
+        {isInputError && <Alert severity="error">Invalid input data. Please check it again!</Alert>}
         <Button
           sx={{ marginTop: 2, textTransform: "none" }}
           variant="contained"
           color="primary"
-          onClick={() => props.onSubmit()}
+          onClick={() => {
+            dispatch(addRestaurant(name, location, adminId));
+            if(!isInputError) {
+              props.onClose();
+            }
+          }}
         >
           Submit
         </Button>

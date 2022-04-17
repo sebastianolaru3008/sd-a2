@@ -30,6 +30,7 @@ public class OrderController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping(path = "{orderId}")
     public ResponseEntity<OrderDto> setOrderStatus(@PathVariable("orderId")String id, @RequestBody OrderStatus orderStatus){
         try{

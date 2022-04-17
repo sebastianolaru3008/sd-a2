@@ -12,6 +12,6 @@ const BillReducerSlice = createSlice({
   },
 });
 
-export const {addToCart, removeFromCart} = BillReducerSlice.actions;
+export const {addToCart, removeFromCart, clearCart} = BillReducerSlice.actions;
 
 export const BillReducer = BillReducerSlice.reducer;
