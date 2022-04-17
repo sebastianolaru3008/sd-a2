@@ -48,7 +48,7 @@ async (dispatch) =>{
     }
 }
 
-export const addRestaurant = (name: string, location:string, adminId:string) : ThunkAction < void, RootState, null, AnyAction> => 
+export const addRestaurant = (name: string, location:string, adminId:string, onClose: () => void ) : ThunkAction < void, RootState, null, AnyAction> => 
 async (dispatch) =>{
     try{
         const data = {  name: name, location: location, adminId: adminId } as RestaurantDto;
@@ -56,13 +56,14 @@ async (dispatch) =>{
 
         dispatch(addRestaurantToUser(response));
         dispatch(setIsInputError(false));
+        onClose();
     }catch(error){
         dispatch(setIsInputError(true));
         console.log("Error:", error);
     }
 }
 
-export const addFood = (name:string, description:string, category:string, price:number, restaurantId:string) : ThunkAction < void, RootState, null, AnyAction> => 
+export const addFood = (name:string, description:string, category:string, price:number, restaurantId:string, onClose: () => void ) : ThunkAction < void, RootState, null, AnyAction> => 
 async (dispatch) =>{
     try{
       console.log("🚀 ~ file: actions.ts ~ line 66 ~ restaurantId", restaurantId)
@@ -71,6 +72,7 @@ async (dispatch) =>{
 
         dispatch(addFoodToRestaurant({food:response, restaurantId: restaurantId}));
         dispatch(setIsInputError(false));
+        onClose();
     }catch(error){
         console.log("Error:", error);
         dispatch(setIsInputError(true));

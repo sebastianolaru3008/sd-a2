@@ -77,7 +77,7 @@ const CustomerDashboard = () => {
               <TableCell align="right">Action</TableCell>
             </TableRow>
           }
-          body={currentRestaurant?.foods.filter(food => food.category === category).map((food) => (
+          body={!!currentRestaurant?.foods && currentRestaurant?.foods.filter(food => food.category === category).map((food) => (
             <TableRow
               key={food.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -115,7 +115,7 @@ const CustomerDashboard = () => {
               <TableCell align="right">Status</TableCell>
             </TableRow>
           }
-          body={user.orders.map((row) => (
+          body={!!user.orders && user.orders.map((row) => (
             <TableRow
               key={row.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

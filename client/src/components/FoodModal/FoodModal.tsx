@@ -99,10 +99,8 @@ const FoodModal = (props: Props) => {
           color="primary"
           sx={{ textTransform: "none" }}
           onClick={() => {
-            dispatch(addFood(name, description, category, price, restaurantId));
-            if(!isInputError) {
-              props.onClose();
-            }
+            dispatch(addFood(name, description, category, price, restaurantId, props.onClose));
+          
           }}
         >
           Submit

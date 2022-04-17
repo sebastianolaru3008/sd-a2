@@ -88,10 +88,7 @@ const RestaurantModal = (props: Props) => {
           variant="contained"
           color="primary"
           onClick={() => {
-            dispatch(addRestaurant(name, location, adminId));
-            if(!isInputError) {
-              props.onClose();
-            }
+            dispatch(addRestaurant(name, location, adminId, props.onClose));
           }}
         >
           Submit

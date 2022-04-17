@@ -173,7 +173,7 @@ const AdminDashboard = () => {
               <TableCell align="right">Status</TableCell>
             </TableRow>
           }
-          body={!!currentRestaurant?.foods && currentRestaurant?.orders.filter(order => order.orderStatus === orderStatus).map((row) => (
+          body={!!currentRestaurant?.orders && currentRestaurant?.orders.filter(order => order.orderStatus === orderStatus).map((row) => (
             <TableRow
               key={row.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
