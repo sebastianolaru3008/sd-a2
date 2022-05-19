@@ -2,18 +2,9 @@ import AddIcon from '@mui/icons-material/Add';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import {
-    Autocomplete,
-    Drawer,
-    FormControl,
-    InputLabel,
-    Select,
-    SelectChangeEvent,
-    TextField,
-} from '@mui/material';
+import { Autocomplete, Drawer, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import MenuItem from '@mui/material/MenuItem';
 import Tab from '@mui/material/Tab';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -26,13 +17,11 @@ import HeaderBar from '../../../components/HeaderBar/HeaderBar';
 import { FoodOrderItem } from '../../../models/entities/FoodOrderItem';
 import { Restaurant } from '../../../models/entities/Restaurant';
 import { User } from '../../../models/entities/User';
-import { categories } from '../../../models/enums/FoodCategory';
-import { addToCart } from '../../../stores/bill/slice';
+import { addToCart, clearCart } from '../../../stores/bill/slice';
 import { setCurrentRestaurant } from '../../../stores/restaurants/slice';
 import { RootState } from '../../../stores/store';
 
 const CustomerDashboard = () => {
-    const [category, setCategory] = React.useState(categories[0]);
     const [cartDrawer, setCartDrawer] = React.useState(false);
     const [tab, setTab] = React.useState('1');
 
@@ -59,21 +48,6 @@ const CustomerDashboard = () => {
     const renderCustomerMenu = () => {
         return (
             <Box>
-                <FormControl>
-                    <InputLabel>Category</InputLabel>
-                    <Select
-                        value={category}
-                        label="Restaurant"
-                        onChange={(event: SelectChangeEvent) =>
-                            setCategory(event.target.value)
-                        }
-                    >
-                        {categories.map(item => (
-                            <MenuItem value={item}>{item}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-
                 <ContentTable
                     header={
                         <TableRow>
@@ -86,40 +60,38 @@ const CustomerDashboard = () => {
                     }
                     body={
                         !!currentRestaurant?.foods &&
-                        currentRestaurant?.foods
-                            .filter(food => food.category === category)
-                            .map(food => (
-                                <TableRow
-                                    key={food.name}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {food.name}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {food.description}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {food.category}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {food.price}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <IconButton
-                                            onClick={() => {
-                                                dispatch(addToCart(food));
-                                            }}
-                                        >
-                                            <AddIcon />
-                                        </IconButton>
-                                    </TableCell>
-                                </TableRow>
-                            ))
+                        currentRestaurant?.foods.map(food => (
+                            <TableRow
+                                key={food.id}
+                                sx={{
+                                    '&:last-child td, &:last-child th': {
+                                        border: 0,
+                                    },
+                                }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {food.name}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {food.description}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {food.category}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {food.price}
+                                </TableCell>
+                                <TableCell align="right">
+                                    <IconButton
+                                        onClick={() => {
+                                            dispatch(addToCart(food));
+                                        }}
+                                    >
+                                        <AddIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))
                     }
                 />
             </Box>
@@ -180,7 +152,13 @@ const CustomerDashboard = () => {
     };
 
     return (
-        <>
+        <Box
+            sx={{
+                height: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+        >
             <HeaderBar
                 isCustomer
                 badgeCount={cartItems.reduce(
@@ -198,11 +176,17 @@ const CustomerDashboard = () => {
                 <Cart />
             </Drawer>
 
-            <Box mt={4}>
+            <Box
+                sx={{
+                    bgcolor: 'background.default',
+                    flex: 1,
+                    p: 3,
+                }}
+            >
                 <Autocomplete
                     disablePortal
                     options={restaurants.map(restaurant => restaurant.name)}
-                    sx={{ width: 300 }}
+                    sx={{ width: 300, py: 3 }}
                     renderInput={params => (
                         <TextField {...params} label="Restaurant" />
                     )}
@@ -215,6 +199,7 @@ const CustomerDashboard = () => {
                                 ) as Restaurant,
                             ),
                         );
+                        dispatch(clearCart());
                     }}
                 />
 
@@ -229,7 +214,7 @@ const CustomerDashboard = () => {
                     <TabPanel value="2">{renderCustomerOrders()}</TabPanel>
                 </TabContext>
             </Box>
-        </>
+        </Box>
     );
 };
 export default CustomerDashboard;

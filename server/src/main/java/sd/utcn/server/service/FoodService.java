@@ -21,10 +21,16 @@ public class FoodService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    /**
+     * Adds a food item to the given restaurant.
+     * @param newFood
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public FoodDto addFoodToRestaurant(NewFoodDto newFood) throws Exception {
         var restaurant = restaurantRepository.findById(newFood.getRestaurantId());
-        if(restaurant.isEmpty()) throw  new Exception("Nonexistent restaurant");
+        if(restaurant.isEmpty()) throw  new Exception("Restaurant doesn't exist!");
         if(newFood.getPrice() <= 0) throw  new Exception("Invalid price");
 
         var entity = FoodMapper.toEntity(newFood);

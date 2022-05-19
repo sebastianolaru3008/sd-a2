@@ -26,13 +26,24 @@ public class RestaurantService {
         return restaurantRepository.findAll().stream().map(RestaurantMapper::toDto).toList();
     }
 
+    /**
+     * Retrieves the restaurant with the given id.
+     * @param id
+     * @return
+     * @throws Exception
+     */
     public RestaurantDto getById(String id) throws Exception {
         var r = restaurantRepository.findById(id);
         if (r.isEmpty()) throw new Exception("Nonexistent restaurant");
         return RestaurantMapper.toDto(r.get());
     }
 
-    @Transactional
+    /**
+     * Creates a new restaurant in the current database.
+     * @param newRestaurantDto
+     * @return
+     * @throws Exception
+     */    @Transactional
     public RestaurantDto add(NewRestaurantDto newRestaurantDto) throws Exception {
         var admin = adminRepository.findById(newRestaurantDto.getAdminId());
         if(admin.isEmpty()) throw new Exception("Nonexistent admin");

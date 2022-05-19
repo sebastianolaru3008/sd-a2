@@ -9,4 +9,5 @@ import java.util.List;
 @Getter
 public class AdminDto extends UserDto {
     List<AdminRestaurantDto> restaurants;
+    private boolean isAdmin = true;
 }

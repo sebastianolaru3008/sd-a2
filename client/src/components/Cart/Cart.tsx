@@ -1,3 +1,4 @@
+import SendIcon from '@mui/icons-material/Send';
 import { Box, Button } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,23 +9,6 @@ import { placeOrder } from '../../stores/bill/actions';
 import { addToCart, removeFromCart } from '../../stores/bill/slice';
 import { RootState } from '../../stores/store';
 import CartItem from './CartItem';
-
-const cartItems = [
-    {
-        id: '1',
-        name: 'Pizza Capricioasa',
-        description: 'ham, dough, tomato sauce, mushrooms, corn',
-        category: 'Pizza',
-        price: '24.99',
-    },
-    {
-        id: '2',
-        name: 'Pizza Carbonara',
-        description: 'ham, dough, tomato sauce, mushrooms, corn',
-        category: 'Pizza',
-        price: '14.99',
-    },
-];
 
 const Cart = () => {
     const dispatch = useDispatch();
@@ -37,7 +21,14 @@ const Cart = () => {
     const user = useSelector<RootState, User>(state => state.user.user);
 
     return (
-        <>
+        <Box
+            sx={{
+                minWidth: '25vw',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+            }}
+        >
             <Box component="h2">Your Cart</Box>
             {cartItems.length === 0 ? (
                 <Box component="p">No items in cart.</Box>
@@ -55,29 +46,36 @@ const Cart = () => {
             ))}
             <Box mt={2} component="h3">
                 Total{' '}
-                {cartItems.reduce(
-                    (acc, element) =>
-                        acc + element.item.price * element.quantity,
-                    0,
-                )}{' '}
-                RON
+                {cartItems
+                    .reduce(
+                        (acc, element) =>
+                            acc + element.item.price * element.quantity,
+                        0,
+                    )
+                    .toFixed(2)}{' '}
+                LEI
             </Box>
             <Button
                 variant="contained"
-                style={{ textTransform: 'none' }}
+                disabled={cartItems.length === 0}
+                endIcon={<SendIcon />}
                 onClick={() => {
-                    dispatch(
-                        placeOrder(
-                            user?.id,
-                            cartItems,
-                            currentRestaurant?.id ?? '',
-                        ),
-                    );
+                    if (currentRestaurant) {
+                        dispatch(
+                            placeOrder(
+                                user?.id,
+                                cartItems,
+                                currentRestaurant?.id,
+                                currentRestaurant?.adminEmail,
+                                currentRestaurant?.name,
+                            ),
+                        );
+                    }
                 }}
             >
                 Place order
             </Button>
-        </>
+        </Box>
     );
 };
 

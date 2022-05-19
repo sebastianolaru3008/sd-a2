@@ -6,10 +6,13 @@ import sd.utcn.server.model.Customer;
 
 public class CustomerMapper {
     public static Customer toEntity(NewCustomerDto customerDto) {
-        Customer c = new Customer();
-        c.setEmail(customerDto.getEmail());
-        c.setPasswordHash(customerDto.getPassword());
-        return c;
+//        Customer c = new Customer();
+//        c.setEmail(customerDto.getEmail());
+//        c.setPasswordHash(customerDto.getPassword());
+        return Customer.builder()
+                .email(customerDto.getEmail())
+                .passwordHash(customerDto.getPassword())
+                .build();
     }
 
     public static CustomerDto toDto(Customer customer) {

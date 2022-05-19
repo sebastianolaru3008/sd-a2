@@ -38,11 +38,11 @@ public class Order {
             case IN_DELIVERY -> new InDeliveryState(this);
             default -> new DeliveredState(this);
         };
-        state.advanceOrder();
+        state.pushOrder();
     }
 
     public void declineOrder() {
-        state.declineOrder();
+        state.denyOrder ();
     }
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;

@@ -9,12 +9,12 @@ public class AcceptedState extends State{
     }
 
     @Override
-    public void advanceOrder() {
+    public void pushOrder() {
         this.order.setOrderStatus(OrderStatus.IN_DELIVERY);
     }
 
     @Override
-    public void declineOrder() {
+    public void denyOrder() {
 
     }
 }

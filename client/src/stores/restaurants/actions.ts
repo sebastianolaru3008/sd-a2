@@ -5,7 +5,8 @@ import {
     getRestaurantsRequest,
 } from '../../services/RestaurantsService';
 import { RootState } from '../store';
-import { setOrderStatus, setRestaurants } from './slice';
+import { setOrderStatus } from '../user/slice';
+import { setRestaurants } from './slice';
 
 export const getRestaurants =
     (): ThunkAction<void, RootState, null, AnyAction> => async dispatch => {

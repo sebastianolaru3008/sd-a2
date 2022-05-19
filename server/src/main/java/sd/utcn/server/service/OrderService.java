@@ -33,6 +33,12 @@ public class OrderService {
         this.customerRepository = customerRepository;
     }
 
+    /**
+     * Adds a new order for a given restaurant to the current database.
+     * @param newOrder
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public OrderDto addOrder(NewOrderDto newOrder) throws Exception {
         var customer = customerRepository.findById(newOrder.getCustomerId());
@@ -47,7 +53,7 @@ public class OrderService {
         List<OrderedFood> foods = new ArrayList<>();
         for (var f : newOrder.getOrderedFoods()) {
             var food = foodRepository.findById(f.getFoodId());
-            if (food.isEmpty()) throw new Exception("invalid food id in order");
+            if (food.isEmpty()) throw new Exception("Invalid food id!");
             if (!Objects.equals(food.get().getRestaurant().getId(), restaurant.get().getId()))
                 throw new Exception("Food is not from the right restaurant");
             foods.add(new OrderedFood(food.get(), f.getQuantity(), order));
@@ -59,6 +65,13 @@ public class OrderService {
         return OrderMapper.toDto(added);
     }
 
+    /**
+     * Changes the order status to 'orderStatus' for the order with the 'id'.
+     * @param id
+     * @param orderStatus
+     * @return
+     * @throws Exception
+     */
     @Transactional
     public OrderDto changeOrderStatus(String id, OrderStatus orderStatus) throws Exception {
         var o = orderRepository.findById(id);

@@ -1,3 +1,5 @@
+import { Order } from '../../models/entities/Order';
+import { Restaurant } from '../../models/entities/Restaurant';
 import { User } from '../../models/entities/User';
 
 export interface UserState {
@@ -12,7 +14,8 @@ export const userInitialState: UserState = {
     user: {
         id: 'nimic',
         email: '',
-        restaurants: [],
-        orders: [],
+        restaurants: [] as Restaurant[],
+        orders: [] as Order[],
+        admin: false,
     },
 };

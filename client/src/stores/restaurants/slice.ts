@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
     setCurrentRestaurantCaseReducer,
-    setOrderStatusCaseReducer,
     setRestaurantsCaseReducer,
 } from './reducers';
 import { restaurantsInitialState } from './state';
@@ -12,11 +11,10 @@ const RestaurantsReducerSlice = createSlice({
     reducers: {
         setRestaurants: setRestaurantsCaseReducer,
         setCurrentRestaurant: setCurrentRestaurantCaseReducer,
-        setOrderStatus: setOrderStatusCaseReducer,
     },
 });
 
-export const { setRestaurants, setCurrentRestaurant, setOrderStatus } =
+export const { setRestaurants, setCurrentRestaurant } =
     RestaurantsReducerSlice.actions;
 
 export const RestaurantsReducer = RestaurantsReducerSlice.reducer;

@@ -8,12 +8,12 @@ public class DeclinedState extends State{
     }
 
     @Override
-    public void advanceOrder() {
+    public void pushOrder() {
 
     }
 
     @Override
-    public void declineOrder() {
+    public void denyOrder() {
 
     }
 }

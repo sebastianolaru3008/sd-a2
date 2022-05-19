@@ -1,0 +1,10 @@
+sd.utcn.server
+sd.utcn.server.controller
+sd.utcn.server.dto
+sd.utcn.server.mapper
+sd.utcn.server.model
+sd.utcn.server.model.state
+sd.utcn.server.repository
+sd.utcn.server.security
+sd.utcn.server.security.filter
+sd.utcn.server.service

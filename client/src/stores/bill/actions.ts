@@ -4,14 +4,19 @@ import { OrderDto } from '../../models/dto/OrderDto';
 import { OrderedFoodDto } from '../../models/dto/OrderedFoodDto';
 import { FoodOrderItem } from '../../models/entities/FoodOrderItem';
 import { placeOrderRequest } from '../../services/BillService';
+import { sendOrderEmail } from '../../services/EmailService';
+import { getEmailTemplateObject } from '../../utils/EmailingUtils';
 import { RootState } from '../store';
 import { addOrder } from '../user/slice';
+import { clearCart } from './slice';
 
 export const placeOrder =
     (
         customerId: string,
         items: FoodOrderItem[],
         restaurantId: string,
+        adminEmail: string,
+        restaurantName: string,
     ): ThunkAction<void, RootState, null, AnyAction> =>
     async dispatch => {
         try {
@@ -28,9 +33,17 @@ export const placeOrder =
             } as OrderDto;
 
             const response = await placeOrderRequest(data);
-            // console.log("🚀 ~ file: actions.ts ~ line 12 ~ response", "orders" in response);
+            await sendOrderEmail(
+                getEmailTemplateObject(
+                    customerId,
+                    adminEmail,
+                    restaurantName,
+                    response,
+                ),
+            );
 
             dispatch(addOrder(response));
+            dispatch(clearCart());
         } catch (error) {
             console.log('Error:', error);
         }

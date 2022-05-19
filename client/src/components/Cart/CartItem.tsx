@@ -13,11 +13,11 @@ type Props = {
 
 const CartItem = (props: Props) => {
     return (
-        <>
+        <Box sx={{ mx: 2 }}>
             <Box sx={{ minWidth: 400, marginTop: 4 }}>
                 <Box component="h3">{props.item.name}</Box>
                 <Box className="information">
-                    <Box component="p">Price: ${props.item.price}</Box>
+                    <Box component="p">Price: {props.item.price} lei</Box>
                 </Box>
                 <Box
                     sx={{
@@ -36,7 +36,7 @@ const CartItem = (props: Props) => {
                 </Box>
                 <Divider />
             </Box>
-        </>
+        </Box>
     );
 };
 

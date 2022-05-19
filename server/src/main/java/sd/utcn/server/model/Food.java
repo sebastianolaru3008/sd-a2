@@ -1,6 +1,8 @@
 package sd.utcn.server.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import sd.utcn.server.model.state.FoodCategory;
@@ -13,6 +15,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Table
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Food {
 
     @Id

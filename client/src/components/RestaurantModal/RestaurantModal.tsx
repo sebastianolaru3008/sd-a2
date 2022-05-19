@@ -21,7 +21,16 @@ type Props = {
     onClose: () => void;
 };
 
-const deliveryZones = ['1', '2', '3'];
+const deliveryZones = [
+    'Gheorgheni',
+    'Manastur',
+    'Marasti',
+    'Centru',
+    'Baciu',
+    'Floresti',
+    'Zorilor',
+    'Gruia',
+];
 
 const RestaurantModal = (props: Props) => {
     const dispatch = useDispatch();
@@ -44,15 +53,16 @@ const RestaurantModal = (props: Props) => {
         >
             <Box
                 sx={{
-                    maxWidth: 200,
-                    backgroundColor: 'white',
+                    bgcolor: 'background.paper',
                     borderRadius: 2 / 1,
                     padding: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
             >
                 <Typography
-                    sx={{ marginBottom: 2 }}
-                    variant="h6"
+                    sx={{ marginBottom: 2, width: '45vw' }}
+                    variant="h3"
                     component="h2"
                 >
                     Add a restaurant

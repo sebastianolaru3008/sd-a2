@@ -1,5 +1,5 @@
-import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 import { BillReducer } from './bill/slice';
@@ -21,7 +21,7 @@ const userPersistConfig = {
 };
 const store = configureStore({
     reducer: combineReducers<RootState>({
-        user: persistReducer(userPersistConfig, UserReducer as Reducer),
+        user: UserReducer,
         restaurants: RestaurantsReducer,
         bill: BillReducer,
     }),

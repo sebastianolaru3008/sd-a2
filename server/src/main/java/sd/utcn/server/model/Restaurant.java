@@ -1,6 +1,8 @@
 package sd.utcn.server.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,6 +16,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Restaurant {
 
     @Id

@@ -1,7 +1,19 @@
-import { Box, Button, Modal, TextField, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Modal,
+    Select,
+    SelectChangeEvent,
+    TextField,
+    Typography,
+} from '@mui/material';
 import Alert from '@mui/material/Alert';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { categories } from '../../models/enums/FoodCategory';
 import { RootState } from '../../stores/store';
 import { addFood } from '../../stores/user/actions';
 
@@ -18,7 +30,7 @@ const FoodModal = (props: Props) => {
     );
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
-    const [price, setPrice] = React.useState(0);
+    const [price, setPrice] = React.useState('');
     const [category, setCategory] = React.useState('');
     const isInputError = useSelector<RootState, boolean>(
         state => state.user.isInputError,
@@ -36,16 +48,16 @@ const FoodModal = (props: Props) => {
         >
             <Box
                 sx={{
-                    maxWidth: 200,
-                    backgroundColor: 'white',
+                    bgcolor: 'background.paper',
                     borderRadius: 2 / 1,
                     padding: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
             >
                 <Typography
-                    sx={{ marginBottom: 2 }}
-                    id="modal-modal-title"
-                    variant="h6"
+                    sx={{ marginBottom: 2, width: '45vw' }}
+                    variant="h3"
                     component="h2"
                 >
                     Add an item
@@ -53,7 +65,6 @@ const FoodModal = (props: Props) => {
 
                 <TextField
                     sx={{ marginBottom: 2 }}
-                    id="outlined-basic"
                     label="Name"
                     variant="outlined"
                     value={name}
@@ -63,7 +74,7 @@ const FoodModal = (props: Props) => {
                 />
                 <TextField
                     sx={{ marginBottom: 2 }}
-                    id="outlined-basic"
+                    multiline
                     label="Description"
                     rows={4}
                     variant="outlined"
@@ -72,7 +83,7 @@ const FoodModal = (props: Props) => {
                         setDescription(event.target.value)
                     }
                 />
-                <TextField
+                {/* <TextField
                     sx={{ marginBottom: 2 }}
                     id="outlined-basic"
                     label="Category"
@@ -83,16 +94,33 @@ const FoodModal = (props: Props) => {
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                         setCategory(event.target.value)
                     }
-                />
+                /> */}
+                <FormControl>
+                    <InputLabel>Category</InputLabel>
+                    <Select
+                        sx={{ marginBottom: 2 }}
+                        value={category}
+                        label="Category"
+                        onChange={(event: SelectChangeEvent) =>
+                            setCategory(event.target.value)
+                        }
+                    >
+                        {categories.map(item => (
+                            <MenuItem key={item} value={item}>
+                                {item}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <TextField
                     sx={{ marginBottom: 2 }}
-                    id="outlined-basic"
                     label="Price"
                     variant="outlined"
                     value={price}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setPrice(Number(event.target.value))
-                    }
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                        if (Number(event.target.value))
+                            setPrice(event.target.value);
+                    }}
                 />
                 {isInputError && (
                     <Alert severity="error">
@@ -110,7 +138,7 @@ const FoodModal = (props: Props) => {
                                 name,
                                 description,
                                 category,
-                                price,
+                                Number(price),
                                 restaurantId,
                                 props.onClose,
                             ),

@@ -12,6 +12,7 @@ public class RestaurantMapper {
         r.setId(restaurant.getId());
         r.setName(restaurant.getName());
         r.setLocation(restaurant.getLocation());
+        r.setAdminEmail(restaurant.getAdmin().getEmail());
         return r;
     }
 

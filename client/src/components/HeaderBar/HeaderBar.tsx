@@ -1,3 +1,4 @@
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {
     Avatar,
@@ -12,6 +13,7 @@ import {
     Typography,
 } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
+import { orange } from '@mui/material/colors';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '../../stores/user/actions';
@@ -36,7 +38,7 @@ const HeaderBar = (props: Props) => {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position="static">
+        <AppBar position="static" sx={{ py: 2 }}>
             <Container maxWidth="xl">
                 <Toolbar
                     disableGutters
@@ -74,7 +76,10 @@ const HeaderBar = (props: Props) => {
                                 <Avatar
                                     alt="Remy Sharp"
                                     src="/static/images/avatar/2.jpg"
-                                />
+                                    sx={{ bgcolor: orange[500] }}
+                                >
+                                    <PersonOutlineIcon />
+                                </Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu

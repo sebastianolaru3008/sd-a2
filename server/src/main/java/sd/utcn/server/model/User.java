@@ -1,6 +1,7 @@
 package sd.utcn.server.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,6 +14,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @Entity(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @ToString
+@NoArgsConstructor
 @Getter
 @Setter
 public abstract class User {
@@ -28,6 +30,15 @@ public abstract class User {
 
     private String id;
     private String email;
-    private String passwordHash;
+    private String password;
+
+    public User(String email, String passwordHash) {
+        this.email = email;
+        this.password = passwordHash;
+    }
+
+    public User(String id) {
+        this.id = id;
+    }
 
 }

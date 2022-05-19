@@ -7,7 +7,12 @@ import {
     addRestaurantRequest,
     getRestaurantsRequest,
 } from '../../services/RestaurantsService';
-import { loginRequest, signupRequest } from '../../services/UserService';
+import {
+    loginRequest,
+    signupRequest,
+    userRequest,
+} from '../../services/UserService';
+import { clearCart } from '../bill/slice';
 import { setCurrentRestaurant, setRestaurants } from '../restaurants/slice';
 import { restaurantsInitialState } from '../restaurants/state';
 import { RootState } from '../store';
@@ -27,13 +32,29 @@ export const loginUser =
     async dispatch => {
         try {
             const loginResponse = await loginRequest(email, password);
-            dispatch(login(loginResponse));
+
+            console.log(loginResponse);
+
+            localStorage.setItem(
+                'accessToken',
+                `Bearer ${loginResponse.accessToken}`,
+            );
+            localStorage.setItem(
+                'refreshToken',
+                `Bearer ${loginResponse.refreshToken}`,
+            );
+
+            const user = await userRequest();
+
+            dispatch(login(user));
 
             const getRestaurantsResponse = await getRestaurantsRequest();
 
             dispatch(setRestaurants(getRestaurantsResponse));
+            dispatch(setIsInputError(false));
         } catch (error) {
             console.log('Error:', error);
+            dispatch(setIsInputError(true));
         }
     };
 
@@ -45,10 +66,13 @@ export const signupUser =
     async dispatch => {
         try {
             const response = await signupRequest(email, password);
-
-            dispatch(login(response));
+            if (response !== undefined) {
+                dispatch(login(response));
+            }
+            dispatch(setIsInputError(false));
         } catch (error) {
             console.log('Error:', error);
+            dispatch(setIsInputError(true));
         }
     };
 
@@ -60,6 +84,9 @@ export const logoutUser =
             dispatch(
                 setCurrentRestaurant(restaurantsInitialState.currentRestaurant),
             );
+            dispatch(clearCart());
+
+            localStorage.removeItem('accessToken');
         } catch (error) {
             console.log('Error:', error);
         }
@@ -101,10 +128,6 @@ export const addFood =
     ): ThunkAction<void, RootState, null, AnyAction> =>
     async dispatch => {
         try {
-            console.log(
-                '🚀 ~ file: actions.ts ~ line 66 ~ restaurantId',
-                restaurantId,
-            );
             const data = {
                 name: name,
                 description: description,

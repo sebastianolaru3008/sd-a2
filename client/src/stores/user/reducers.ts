@@ -38,6 +38,9 @@ export const addFoodToRestaurantCaseReducer = (
 ) => {
     state.user.restaurants = state.user.restaurants.map(restaurant => {
         if (restaurant.id === action.payload.restaurantId) {
+            if (!restaurant.foods) {
+                restaurant.foods = [];
+            }
             restaurant.foods.push(action.payload.food);
         }
         return restaurant;
@@ -49,4 +52,18 @@ export const setIsInputErrorCaseReducer = (
     action: PayloadAction<boolean>,
 ) => {
     state.isInputError = action.payload;
+};
+
+export const setOrderStatusCaseReducer = (
+    state: UserState,
+    action: PayloadAction<Order>,
+) => {
+    state.user.restaurants[0].orders = state.user.restaurants[0].orders.map(
+        (order: Order) => {
+            if (order.id === action.payload.id) {
+                return action.payload;
+            }
+            return order;
+        },
+    );
 };

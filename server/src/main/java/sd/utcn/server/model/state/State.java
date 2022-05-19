@@ -9,6 +9,6 @@ public abstract class State {
         this.order = order;
     }
 
-    public abstract void advanceOrder();
-    public abstract void declineOrder();
+    public abstract void pushOrder();
+    public abstract void denyOrder();
 }

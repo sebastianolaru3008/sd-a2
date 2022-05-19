@@ -6,6 +6,7 @@ import {
     loginCaseReducer,
     logoutCaseReducer,
     setIsInputErrorCaseReducer,
+    setOrderStatusCaseReducer,
 } from './reducers';
 import { userInitialState } from './state';
 
@@ -19,6 +20,7 @@ const UserReducerSlice = createSlice({
         addRestaurantToUser: addRestaurantToUserCaseReducer,
         setIsInputError: setIsInputErrorCaseReducer,
         addFoodToRestaurant: addFoodToRestaurantCaseReducer,
+        setOrderStatus: setOrderStatusCaseReducer,
     },
 });
 
@@ -29,6 +31,7 @@ export const {
     addRestaurantToUser,
     addFoodToRestaurant,
     setIsInputError,
+    setOrderStatus,
 } = UserReducerSlice.actions;
 
 export const UserReducer = UserReducerSlice.reducer;

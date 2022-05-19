@@ -9,12 +9,12 @@ public class PendingState extends State{
     }
 
     @Override
-    public void advanceOrder() {
+    public void pushOrder() {
         this.order.setOrderStatus(OrderStatus.ACCEPTED);
     }
 
     @Override
-    public void declineOrder() {
+    public void denyOrder() {
         this.order.setOrderStatus(OrderStatus.DECLINED);
     }
 }

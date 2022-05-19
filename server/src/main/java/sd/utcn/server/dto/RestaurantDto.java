@@ -11,5 +11,6 @@ public class RestaurantDto {
     private String id;
     private String name;
     private String location;
+    private String adminEmail;
     private List<FoodDto> foods;
 }
